@@ -1,0 +1,22 @@
+{
+  "name": "luijo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuijoO/NewExperience.git"
+  },
+  "keywords": [
+    "luijo"
+  ],
+  "author": "luijo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuijoO/NewExperience/issues"
+  },
+  "homepage": "https://github.com/LuijoO/NewExperience#readme"
+}
