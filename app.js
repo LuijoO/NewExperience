@@ -1,9 +1,18 @@
-var hbs = require('express-handlebars');
-var express = require("express");
-var app = express();
+const hbs = require('express-handlebars');
+const app = require("express")();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+io.on('connection', () => {
+  console.log("user connected!")
+});
 
 app.get("/", function (req, res) {
   res.render('home', { layout: 'default' });
+});
+
+app.get("/games", function (req, res) { //path "/..." and 'file to load'
+  res.render('games', { layout: 'default' });
 });
 
 app.set('view engine', 'hbs');
