@@ -2,6 +2,7 @@ const hbs = require('express-handlebars');
 const app = require("express")();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const sassMiddleware = require('node-sass-middleware')
 
 let conexiones = 0;
 
@@ -22,6 +23,14 @@ io.on('connection', socket => {
 
   mostrarConexiones()
 });
+
+app.use(
+  sassMiddleware({
+    src: __dirname + '/sass', //where the sass files are 
+    dest: __dirname + '/public/css', //where css should go
+    debug: true // obvious
+  })
+);
 
 app.get("/", function (req, res) {
   res.render('home', { layout: 'default' });
