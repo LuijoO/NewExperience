@@ -1,5 +1,16 @@
 <script src="/socket.io/socket.io.js"></script>
 
+{{!-- ALert --}}
+
 <script>
     const socket = io('/');
+
+    socket.on("connected", () => {
+        //modificar tambien
+    })
+
+    socket.on("disconnected", () => {
+        //$("#hola").text("")
+        //$(".hola").text("")
+    })
 </script>
