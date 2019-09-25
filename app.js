@@ -15,14 +15,13 @@ io.on('connection', socket => {
   conexiones++;
 
   console.log("user connected!")
+  mostrarConexiones()
 
   socket.on("disconnect", () => {
     conexiones--;
     console.log("user disconnected!")
     mostrarConexiones()
   })
-
-  mostrarConexiones()
 });
 
 app.use(
