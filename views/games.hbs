@@ -3,14 +3,77 @@
 {{!-- ALert --}}
 
 <script>
-    const socket = io('/');
+    $(() => {
+        const socket = io('/');
+        const alertUpdate = (title, text, className) => {
+            $("#status h3").text(title)
+            $("#status").removeClass("alert-warning alert-danger alert-success")
+            $("#status").addClass(className)
+            $("#status p").text(text)
+        }
 
-    socket.on("connected", () => {
-        //modificar tambien
-    })
+        const timerToClose = (time) => {
+            setTimeout(() => {
+                $("#status").fadeOut()
+            }, time)
+        }
 
-    socket.on("disconnected", () => {
-        //$("#hola").text("")
-        //$(".hola").text("")
+        alertUpdate("Conectando", "Preparate para jugar", "alert-warning")
+
+        socket.on("connect", () => {
+            //modificar tambien
+            alertUpdate("Te has conectado", "Hora de jugar", "alert-success")
+            timerToClose(4000)
+        })
+
+        socket.on("disconnect", () => {
+            alertUpdate("se ha perdido la conexion", "Reconectate", "alert-danger")
+        })
     })
 </script>
+
+<div class="modal fade" id="instrucciones">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h4 class="modal-title">Intrucciones...</h4>
+            </div>
+            <div class="modal-body">
+                <p> 1- Llena un billete con tu mezcla y dale forma rodando el contenido suavemente de un lado a otro.
+                    <br>
+                    2- Coloca un papel para enrollar con el lado pegajoso hacia arriba entre la mezcla y el billete.<br>
+                    3- Dobla el billete por la mitad y enróllalo hacia arriba con los pulgares.
+                </p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ENTENDIDO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div id="status" class="alert w-3 fade show" role="alert">
+                {{!-- <button type="button" class="close" data-dismiss="alert"><span
+                        aria-hidden="true">&times;</span></button> --}}
+                <h3 class="alert-heading text-center"></h3>
+                <p class="text-center"></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container text-center pt-3">
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#instrucciones">INSTRUCCIONES</button>
+        </div>
+    </div>
+</div>
