@@ -5,22 +5,37 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const sassMiddleware = require('node-sass-middleware')
 
-let conexiones = 0;
+let roomCounter = 0;
 
-const mostrarConexiones = () => {
-  console.log("Cantidad de conexiones: " + conexiones)
-}
+const allSockets = []
 
 io.on('connection', socket => {
-  conexiones++;
+  allSockets.push(socket)
 
-  console.log("user connected!")
-  mostrarConexiones()
+  const waitingPlayer = allSockets.find(s => s.status == "waiting")
 
-  socket.on("disconnect", () => {
-    conexiones--;
-    console.log("user disconnected!")
-    mostrarConexiones()
+  if (waitingPlayer) {
+    roomCounter++
+
+    //waitingPlayer
+    //socket
+
+    const room = 'room_' + roomCounter
+
+    socket.join(room);
+    waitingPlayer.join(room);
+
+    socket.room = room;
+    waitingPlayer.room = room;
+    io.to(room).emit("players connected");
+  } else {
+    socket.status = "waiting"
+  }
+
+  // console.log("user connected!")
+
+  socket.on("disconnect", socket => {
+    // console.log("user disconnected!")
   })
 });
 
@@ -54,3 +69,4 @@ app.engine('hbs', hbs({
 server.listen(3000, function () {
   console.log("Example app listening on port 3000!");
 });
+

@@ -22,12 +22,16 @@
 
         socket.on("connect", () => {
             //modificar tambien
-            alertUpdate("Te has conectado", "Hora de jugar", "alert-success")
-            timerToClose(4000)
+            alertUpdate("Esperando oponente...", "Paciencia...", "alert-info")
         })
 
         socket.on("disconnect", () => {
             alertUpdate("se ha perdido la conexion", "Reconectate", "alert-danger")
+        })
+
+        socket.on("players connected", () => {
+            alertUpdate("Let's play", "Enjoy!", "alert-success")
+            timerToClose(4000)
         })
     })
 </script>
