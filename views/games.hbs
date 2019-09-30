@@ -22,12 +22,16 @@
 
         socket.on("connect", () => {
             //modificar tambien
-            alertUpdate("Te has conectado", "Hora de jugar", "alert-success")
-            timerToClose(4000)
+            alertUpdate("Esperando oponente...", "Paciencia...", "alert-info")
         })
 
         socket.on("disconnect", () => {
             alertUpdate("se ha perdido la conexion", "Reconectate", "alert-danger")
+        })
+
+        socket.on("players connected", () => {
+            alertUpdate("Let's play", "Enjoy!", "alert-success")
+            timerToClose(4000)
         })
     })
 </script>
@@ -56,7 +60,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container mt-2">
     <div class="row">
         <div class="col">
             <div id="status" class="alert w-3 fade show" role="alert">
@@ -74,6 +78,32 @@
         <div class="col">
             <button type="button" class="btn btn-primary" data-toggle="modal"
                 data-target="#instrucciones">INSTRUCCIONES</button>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center my-auto pt-3">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col-8 mt-3">
+                    <div class="bg-secondary p-3 h-100 rounded">
+                        <p class="align-content-center">ESPACIO PARA EJ JUEGO</p>
+                    </div>
+                </div>
+                <div class="col-4 mt-3">
+                    <div class="bg-secondary p-3">
+                        <p>ESPACIO PARA CHAT</p>
+                        <div class="chat col-12">
+                            MUESTRA DE CHAT
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
