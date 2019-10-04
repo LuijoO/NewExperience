@@ -7,32 +7,23 @@ const sassMiddleware = require('node-sass-middleware')
 
 let roomCounter = 0;
 
-const allSockets = []
-
 io.on('connection', socket => {
-  allSockets.push(socket)
+  let room = 'room_' + roomCounter
 
-  const waitingPlayer = allSockets.find(s => s.status == "waiting")
+  io.in(room).clients((error, clients) => {
+    if (clients.length < 2) {
+      socket.join(room);
 
-  if (waitingPlayer) {
-    roomCounter++
-
-    //waitingPlayer
-    //socket
-
-    const room = 'room_' + roomCounter
-
-    socket.join(room);
-    waitingPlayer.join(room);
-
-    socket.room = room;
-    waitingPlayer.room = room;
-    io.to(room).emit("players connected");
-  } else {
-    socket.status = "waiting"
-  }
-
-  // console.log("user connected!")
+      if (clients.length == 1) {
+        //une a las dos personas, comienza el juego
+        io.to(room).emit("players connected");
+      }
+    } else {
+      roomCounter++
+      room = 'room_' + roomCounter
+      socket.join(room);
+    }
+  });
 
   socket.on("disconnect", socket => {
     // console.log("user disconnected!")

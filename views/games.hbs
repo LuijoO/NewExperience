@@ -9,12 +9,12 @@
             $("#status h3").text(title)
             $("#status").removeClass("alert-warning alert-danger alert-success")
             $("#status").addClass(className)
-            $("#status p").text(text)
+            $("#status span").text(text)
         }
 
         const timerToClose = (time) => {
             setTimeout(() => {
-                $("#status").fadeOut()
+                $("#status h3").fadeOut()
             }, time)
         }
 
@@ -67,7 +67,7 @@
                 {{!-- <button type="button" class="close" data-dismiss="alert"><span
                         aria-hidden="true">&times;</span></button> --}}
                 <h3 class="alert-heading text-center"></h3>
-                <p class="text-center"></p>
+                <span class="text-center d-flex justify-content-center"></span>
 
             </div>
         </div>
